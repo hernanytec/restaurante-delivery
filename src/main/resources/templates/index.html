@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Restaurante Delivery</title>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+<!-- Font Awesome-->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+	integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+	crossorigin="anonymous">
+
+
+
+<style>
+html, body {
+	margin: 0;
+	height: 100%;
+}
+
+body {
+	background-image: url("/img/bg_index_2.jpeg");
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+/*Animações na navbar*/
+.navbar {
+	transition-duration: .5s;
+}
+
+.navbar a {
+	transition-duration: .5s;
+}
+
+.navbar a:hover {
+	border-radius: 3px;
+	background-color: rgba(255, 255, 255, .2);
+	color: black;
+}
+</style>
+</head>
+
+<body>
+
+
+	<!--Menu-->
+	<nav class="navbar fixed-top navbar-expand-lg"
+		style="background: linear-gradient(rgba(0, 0, 0, 1), transparent)">
+		<a class="navbar-brand text-white" href="#"> <!-- <img src="/img/delivery-logo.png" width="100" height="50">  -->
+			Delivery
+		</a>
+
+		<button class="navbar-toggler ml-auto" type="button"
+			data-toggle="collapse" data-target="#conteudoNavbarSuportado"
+			aria-controls="conteudoNavbarSuportado" aria-expanded="false"
+			aria-label="Alterna navegação">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse " id="conteudoNavbarSuportado">
+			<ul class="navbar-nav ml-auto ">
+				<li sec:authorize="isAnonymous()" class="nav-item px-2"><a class="nav-link text-white"
+					href="/usuario/cadastro"> Cadastro de usuario </a></li>
+
+
+				<li class="nav-item px-2 "><a class="nav-link text-white"
+					href="/pratos/listagem"> Lista de pratos </a></li>
+
+				<li sec:authorize="hasAnyRole('USER')"  class="nav-item px-2 "><a class="nav-link text-white"
+					href="/pedidos/atual"> Meus pedidos </a></li>
+
+				<li sec:authorize="hasAnyRole('ADMIN')"  class="nav-item px-2 "><a class="nav-link text-white"
+					href="/pratos/cadastro"> Cadastro de pratos </a></li>
+
+				<li sec:authorize="hasAnyRole('ADMIN')" class="nav-item px-2 "><a class="nav-link text-white"
+					href="/pratos/cadastro"> Cadastro de gerente </a></li>
+					
+				<!-- 
+				<li class="nav-item dropdown px-2">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Entrar
+					</a>
+
+					<div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
+
+						<div class="container">
+							<form th:action="@{/login/entrar}" method="post" class="form-inline d-flex flex-column justify-content-center">
+								<p class="font-weight-bold">Login</p>
+								<input class="form-control" type="text" autocomplete="username" placeholder="Email" name="usermane">
+								<input class="form-control mt-2" type="password" autocomplete="current-password" placeholder="Senha" name="password">
+
+								<button class="btn btn-outline-success mt-4 w-100" type="submit">Logar</button>
+							</form>
+						</div>
+
+						<div class="dropdown-divider"></div>
+
+						<p>
+							Não tem uma conta? <br>
+							<a href="/usuario/cadastro"> clique aqui</a>
+						</p>
+
+					</div>
+				</li>
+ -->
+				<li sec:authorize="isAnonymous()" class="nav-item px-2"><a class="nav-link text-white"
+					href="/login"> Entrar </a></li>
+
+				<li sec:authorize="isAuthenticated()" class="nav-item px-2"><a class="nav-link text-white"
+					href="/logout"> Sair </a></li>
+
+			</ul>
+		</div>
+	</nav>
+
+
+	<!-- Apresentação -->
+	<div class="h-100 w-100 text-center text-white">
+		<div style="padding-top: 25%">
+			<h1 class="font-weight-bold">Delivery de comida nunca foi tão
+				fácil</h1>
+			<h2>Você escolhe e levamos até você!</h2>
+		</div>
+	</div>
+
+
+	<div class="bg-white" style="padding: 8%">
+		<h1 class="text-center mb-5">Simples, rápido e prático</h1>
+		<div class="card-group w-75 mx-auto">
+			<div class="card text-center">
+				<div class="card-header"
+					style="height: 15%; background: rgb(186, 24, 1)">
+					<div
+						class="bg-white rounded-circle mx-auto row border border-danger"
+						style="width: 50px; height: 50px; border-color: rgb(186, 24, 1)">
+						<i class="m-auto fas  fa-clipboard-list" style="font-size: 30px"></i>
+					</div>
+				</div>
+
+				<div class="card-body mt-4">
+					<h5 class="card-title">Escolha os pratos</h5>
+					<p class="card-text">Temos diversas opções de pratos, escolha
+						aqueles que você quiser e teremos o prazer de entregar.</p>
+				</div>
+				<div class="card-footer" style="background: rgb(186, 24, 1)"></div>
+			</div>
+			<div class="card text-center">
+				<div class="card-header bg-warning" style="height: 15%">
+					<div
+						class="bg-white rounded-circle mx-auto row border border-warning"
+						style="width: 50px; height: 50px">
+						<i class="m-auto fas  fa-check" style="font-size: 30px"></i>
+					</div>
+				</div>
+
+				<div class="card-body mt-4">
+					<h5 class="card-title">Confirme o pedido</h5>
+					<p class="card-text">Depois que estiver tudo certo, confirme o
+						pedido para matar sua fome o mais rápido possível!</p>
+				</div>
+				<div class="card-footer bg-warning"></div>
+			</div>
+			<div class="card text-center">
+				<div class="card-header"
+					style="height: 15%; background: rgb(107, 117, 7)">
+
+					<div
+						class="bg-white rounded-circle mx-auto row border border-success"
+						style="width: 50px; height: 50px; border-color: rgb(107, 117, 7)">
+						<i class="m-auto fas  fa-paper-plane" style="font-size: 30px"></i>
+					</div>
+				</div>
+				<div class="card-body mt-4">
+					<h5 class="card-title">Entregamos onde você estiver</h5>
+					<p class="card-text">Agora é com a gente! Você só precisa
+						aguardar e logo logo seu pedido chegará até você :)</p>
+				</div>
+				<div class="card-footer" style="background: rgb(107, 117, 7)"></div>
+			</div>
+		</div>
+
+	</div>
+
+
+	<div id="contato"
+		class="jumbotron jumbotron-fluid m-0 p-0 pt-4 pb-2 text-white text-center"
+		style="background: rgba(0, 0, 0, .9)">
+
+		<div class="container row d-flex justify-content-around mx-auto">
+			<div>
+				<h5>Endereço</h5>
+				<p>
+					Vestibulum a dui vitae erat dignissim, 9999 <br /> Nullam –
+					Curabitur – Aliquam 9999-999
+				</p>
+			</div>
+
+			<div>
+
+				<h5>Contato</h5>
+				<p>
+					donec@accumsan.sed.eu <br /> (99) 9999 - 9999
+				</p>
+			</div>
+
+			<div>
+				<h5>Mídia social</h5>
+				<div class="row mx-auto d-flex justify-content-between mt-3">
+					<a href="#"> <i class="fab fa-facebook-f text-white"
+						style="font-size: 35px"></i>
+					</a> <a href="#"> <i class="fab fa-instagram text-white"
+						style="font-size: 35px"></i>
+					</a>
+				</div>
+			</div>
+
+			<hr class="w-75 bg-white" />
+			<footer>© Copyright 2019. Curabitur blandit justo sed dolor
+				varius aliquet.</footer>
+		</div>
+	</div>
+
+	<!-- jQuery e Bootstrap JS -->
+	<script src="/js/jquery-3.3.1.slim.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+
+
+	<!--Animação nav-bar-->
+	<script>
+		$(document).ready(function() {
+			$(window).scroll(function() {
+				var scroll = $(window).scrollTop()
+				if (scroll > $('.navbar').height()) {
+					$('.navbar').removeClass('py-2')
+					$('.navbar').addClass('py-0')
+				} else {
+					$('.navbar').removeClass('py-0')
+					$('.navbar').addClass('py-2')
+				}
+			})
+		})
+	</script>
+
+</body>
+</html>

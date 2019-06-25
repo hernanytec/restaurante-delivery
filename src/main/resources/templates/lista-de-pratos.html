@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+					xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>Lista de pratos</title>
+
+<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/jquery.bootstrap-touchspin.css">
+	
+	<!-- Atualização -->
+	<script type="text/javascript">
+		function atualizaTotal(prato_id, prato_preco){	
+			total_id = `#total${prato_id}`
+				
+			qtd = getQtd(prato_id)
+			$(total_id).text(`Total: R$ ${qtd * prato_preco}`)	
+			
+		}
+		
+		function fazPedido(prato_id){
+			qtd = getQtd(prato_id)
+			
+			url =   '/pedidos/adicionar/'+prato_id+'/'+qtd
+			window.location = url
+		}
+		
+		function getQtd(prato_id){
+			qtd = $(`#qtd${prato_id}`).val()
+			console.log(qtd)
+			return qtd;
+		}
+	</script>
+</head>
+<body>
+
+	<!--Menu-->
+	<nav class="navbar fixed-top navbar-expand-lg"
+		style="background: linear-gradient(rgba(0, 0, 0, 1), transparent)">
+		<a class="navbar-brand text-white" href="#"> <!-- <img src="/img/delivery-logo.png" width="100" height="50">  -->
+			Delivery
+		</a>
+
+		<button class="navbar-toggler ml-auto" type="button"
+			data-toggle="collapse" data-target="#conteudoNavbarSuportado"
+			aria-controls="conteudoNavbarSuportado" aria-expanded="false"
+			aria-label="Alterna navegação">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse " id="conteudoNavbarSuportado">
+			<ul class="navbar-nav ml-auto ">
+				<li sec:authorize="isAnonymous()" class="nav-item px-2"><a class="nav-link text-white"
+					href="/usuario/cadastro"> Cadastro de usuario </a></li>
+
+
+				<li class="nav-item px-2 "><a class="nav-link text-white"
+					href="/pratos/listagem"> Lista de pratos </a></li>
+
+				<li sec:authorize="hasAnyRole('USER')"  class="nav-item px-2 "><a class="nav-link text-white"
+					href="/pedidos/atual"> Meus pedidos </a></li>
+
+				<li sec:authorize="hasAnyRole('ADMIN')"  class="nav-item px-2 "><a class="nav-link text-white"
+					href="/pratos/cadastro"> Cadastro de pratos </a></li>
+
+				<li sec:authorize="hasAnyRole('ADMIN')" class="nav-item px-2 "><a class="nav-link text-white"
+					href="/pratos/cadastro"> Cadastro de gerente </a></li>
+					
+				<!-- 
+				<li class="nav-item dropdown px-2">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Entrar
+					</a>
+
+					<div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
+
+						<div class="container">
+							<form th:action="@{/login/entrar}" method="post" class="form-inline d-flex flex-column justify-content-center">
+								<p class="font-weight-bold">Login</p>
+								<input class="form-control" type="text" autocomplete="username" placeholder="Email" name="usermane">
+								<input class="form-control mt-2" type="password" autocomplete="current-password" placeholder="Senha" name="password">
+
+								<button class="btn btn-outline-success mt-4 w-100" type="submit">Logar</button>
+							</form>
+						</div>
+
+						<div class="dropdown-divider"></div>
+
+						<p>
+							Não tem uma conta? <br>
+							<a href="/usuario/cadastro"> clique aqui</a>
+						</p>
+
+					</div>
+				</li>
+ -->
+				<li sec:authorize="isAnonymous()" class="nav-item px-2"><a class="nav-link text-white"
+					href="/login"> Entrar </a></li>
+
+				<li sec:authorize="isAuthenticated()" class="nav-item px-2"><a class="nav-link text-white"
+					href="/logout"> Sair </a></li>
+
+			</ul>
+		</div>
+	</nav>
+
+
+
+
+		<!-- Destaques -->
+	<div class="jumbotron bg-white mt-5">
+		<h1 class="display-4 text-center">Cardápio</h1>
+		
+		<hr>
+	
+		<div class="row d-flex justify-content-around">
+			
+			<div class="card shadow-sm mb-5" style="width: 25rem" th:each="prato: ${listaPratos}">
+				
+				<img class="card-img-top" width="100" height="280" th:src="${prato.caminhoImagem}">
+				
+				<div class="card-body">
+					<h5 class="card-title" th:text="${prato.nome}"></h5>
+					<p class="card-text" th:text="${'R$ ' + prato.preco}">
+				</div>
+			
+				<div sec:authorize="hasAnyRole('USER')"  class="card-footer">
+					<button data-toggle="modal" th:href="@{'#modal' + ${prato.id}}"
+					type="button" class="btn btn-success w-100"> Adicionar ao pedido</button>
+				</div>
+								
+				<!-- Modal -->
+				<div class="modal fade" th:id="'modal' + ${prato.id}" tabindex="-1" role="dialog"
+					aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title w-100 text-center" th:text="${prato.nome}"></h5>		
+							</div>
+							<div class="modal-body"> 
+								 <form class="form-horizontal" role="form">
+						            <div class="form-group">
+						                <label for="spinQtd" class="control-label">Quantidade:</label>
+						                <input th:id="'qtd' + ${prato.id}" th:onchange="|atualizaTotal('${prato.id}', '${prato.preco}')|"
+						                 	type="number" value="0"
+						                 	name="spinQtd" class="form-control text-center">
+						            </div>
+						        </form>
+							</div>
+							
+							<div class="modal-footer">
+								<span class="mr-auto" th:id="'total' + ${prato.id}"></span>
+								
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+								<!--  th:href="@{/pedidos/adicionar/{prato}/{quantidade}(prato = ${prato.id}, quantidade = ${qtd})}">-->
+								<a th:href="|javascript:fazPedido('${prato.id}')|">
+									<button type="submit" class="btn btn-success">Confirmar</button>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	
+
+
+	<!-- jQuery e Bootstrap JS -->
+	<script src="/js/jquery-3.3.1.slim.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/jquery.bootstrap-touchspin.js"></script>
+	
+	<!-- TouchSpin -->
+	  <script>
+          $("input[name='spinQtd']").TouchSpin({
+              min: 1,
+              max: 1000,
+              stepinterval: 50,
+          });
+    </script>
+	
+	
+	<!-- Animação card pratos -->
+	<script>
+		$(".card").hover(
+			function(){
+				$(this).removeClass("shadow-sm")
+				$(this).addClass("shadow-lg")
+			},function(){
+				$(this).removeClass("shadow-lg")
+				$(this).addClass("shadow-sm")
+			}
+		);
+	</script>
+</body>
+</html>

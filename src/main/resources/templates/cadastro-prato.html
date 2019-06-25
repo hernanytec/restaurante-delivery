@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Cadastro de pratos</title>
+</head>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+<!-- Font Awesome-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+  integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+<body>
+	<div class="jumbotron bg-dark rounded-0 text-white">
+		<form id="form-features" method="POST" th:action="@{/pratos/salvar}" enctype="multipart/form-data" th:object="${prato}">
+			<div class="form-row form-group">
+				<div class="col-sm-4">
+					<label for="input-nome">Nome</label>
+					<input type="text" id="input-nome" required th:field="*{nome}" class="form-control" placeholder="Nome do prato">
+				</div>
+			</div>
+			
+			<div class="form-row form-group">
+				<div class="col-sm-1">
+					<label for="input-preco">Preço (R$)</label>
+					<input type="number"  step="any" id="input-preco" required th:field="*{preco}" class="form-control" placeholder="Preço">
+				</div>
+				<div class="col-sm-3">
+					<label for="file-upload">Imagem</label>
+				   	<input type="file" style="cursor: pointer" required name="imageFile" class="form-control btn btn-light" id="file-upload">
+				 </div>
+			</div>
+			<div class="form-row form-group">
+				<div class="col-sm-4">
+				   <input type="submit" class="btn btn-success w-100 mt-3" id="btn-submit" value="Salvar"/>
+			 	</div>
+			</div>
+		</form>
+	</div>
+	
+	
+<!-- jQuery e Bootstrap JS -->
+<script src="/js/jquery-3.3.1.slim.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+	
+
+<!--  -->
+<script >
+	$('#input-preco').focusin(function(){
+		if($(this).val() == 0){
+			console.log("ok")
+			$(this).val("")
+		}
+	});
+</script>
+
+</body>
+</html>
