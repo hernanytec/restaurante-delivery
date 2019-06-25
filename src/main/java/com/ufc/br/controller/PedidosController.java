@@ -68,6 +68,13 @@ public class PedidosController {
 		return mv;
 	}
 	
+	@RequestMapping("/cancelar")
+	public ModelAndView cancelar() throws IOException {
+		meusPedidos.clear();
+		ModelAndView mv = new ModelAndView("redirect:/pratos/listagem");
+		return mv;
+	}
+	
 	public int getItemIndexById(Long id) {
 		for(int i = 0; i < meusPedidos.size(); i++) {
 			if(meusPedidos.get(i).prato.getId() == id)

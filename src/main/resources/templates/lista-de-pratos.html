@@ -126,11 +126,16 @@
 					<p class="card-text" th:text="${'R$ ' + prato.preco}">
 				</div>
 			
-				<div sec:authorize="hasAnyRole('USER')"  class="card-footer">
+				<div sec:authorize="!hasAnyRole('ADMIN')"  class="card-footer">
 					<button data-toggle="modal" th:href="@{'#modal' + ${prato.id}}"
 					type="button" class="btn btn-success w-100"> Adicionar ao pedido</button>
 				</div>
-								
+				
+				<div sec:authorize="hasAnyRole('ADMIN')"  class="card-footer">
+				<a th:href="@{/pratos/apagar/{id}(id = ${prato.id})}">
+					 		<button type="button" class="btn btn-danger w-100">Excluir prato</button>
+					</a>
+				</div>				
 				<!-- Modal -->
 				<div class="modal fade" th:id="'modal' + ${prato.id}" tabindex="-1" role="dialog"
 					aria-labelledby="exampleModalLabel" aria-hidden="true">

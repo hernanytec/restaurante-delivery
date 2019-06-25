@@ -64,7 +64,7 @@
 				<div class="card shadow-sm mb-5 m-2" style="width: 15rem" th:each="itemPedido: ${meusPedidos}">
 					<div class="card-header py-1">
 						<a th:href="@{/pedidos/remover-do-pedido/{id}(id = ${itemPedido.prato.id})}">
-							<button type="button" class="close" aria-label="Close">
+							<button id="close-button" data-toggle="tooltip" data-placement="top" title="Remover item" type="button" class="close" aria-label="Close">
 								  <span aria-hidden="true">
 								  	&times;
 								  </span>
@@ -90,11 +90,15 @@
 		
 		<div class="row float-right bg-white" th:object="${valorTotal}">
 			<p class="my-auto bg-light p-2" th:text="'Valor total: R$ ' + ${valorTotal}"/>
-			<button type="button" class="btn btn-danger mx-3">Cancelar pedido</button>
+			<a th:href="@{/pedidos/cancelar}">
+				<button type="button" class="btn btn-danger mx-3">Cancelar pedido</button>
+			</a>
 			<button type="button" class="btn btn-success">Confirmar pedido</button>
 		</div>
 		
 		<hr/>
 	</div>
+	
+
 </body>
 </html>

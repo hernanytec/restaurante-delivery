@@ -49,21 +49,12 @@ public class PratosController {
 		ModelAndView mv = new ModelAndView("redirect:/");
 		return mv;
 	}
-	
-	@RequestMapping("/pratos-cadastrados")
-	public ModelAndView oratosCafastrados() throws IOException {
-		ModelAndView mv = new ModelAndView("pratos-para-deletar");
-		List<Prato> pratos = pratoService.listarTodos();
-		
-		mv.addObject("listaPratos", pratos);
-		return mv;
-	}
-	
+
 	
 	@RequestMapping("/apagar/{id}")
 	public ModelAndView apagarPrato(@PathVariable Long id) throws IOException {
 		pratoService.excuirPrato(id);
-		ModelAndView mv = new ModelAndView("redirect:/pratos/pratos-cadastrados");
+		ModelAndView mv = new ModelAndView("redirect:/pratos/listagem");
 		return mv;
 	}
 	

@@ -83,36 +83,7 @@ body {
 				<li sec:authorize="hasAnyRole('ADMIN')" class="nav-item px-2 "><a class="nav-link text-white"
 					href="/pratos/cadastro"> Cadastro de gerente </a></li>
 					
-				<!-- 
-				<li class="nav-item dropdown px-2">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Entrar
-					</a>
-
-					<div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
-
-						<div class="container">
-							<form th:action="@{/login/entrar}" method="post" class="form-inline d-flex flex-column justify-content-center">
-								<p class="font-weight-bold">Login</p>
-								<input class="form-control" type="text" autocomplete="username" placeholder="Email" name="usermane">
-								<input class="form-control mt-2" type="password" autocomplete="current-password" placeholder="Senha" name="password">
-
-								<button class="btn btn-outline-success mt-4 w-100" type="submit">Logar</button>
-							</form>
-						</div>
-
-						<div class="dropdown-divider"></div>
-
-						<p>
-							Não tem uma conta? <br>
-							<a href="/usuario/cadastro"> clique aqui</a>
-						</p>
-
-					</div>
-				</li>
- -->
-				<li sec:authorize="isAnonymous()" class="nav-item px-2"><a class="nav-link text-white"
+								<li sec:authorize="isAnonymous()" class="nav-item px-2"><a class="nav-link text-white"
 					href="/login"> Entrar </a></li>
 
 				<li sec:authorize="isAuthenticated()" class="nav-item px-2"><a class="nav-link text-white"
