@@ -61,7 +61,7 @@
 	
 		<div class="col d-flex justify-content-left">
 			<div class="row">
-				<div class="card shadow-sm mb-5 m-2" style="width: 15rem" th:each="itemPedido: ${meusPedidos}">
+				<div class="card shadow-sm mb-5 m-2" style="width: 15rem" th:each="itemPedido: ${itensPedido}">
 					<div class="card-header py-1">
 						<a th:href="@{/pedidos/remover-do-pedido/{id}(id = ${itemPedido.prato.id})}">
 							<button id="close-button" data-toggle="tooltip" data-placement="top" title="Remover item" type="button" class="close" aria-label="Close">
@@ -93,12 +93,30 @@
 			<a th:href="@{/pedidos/cancelar}">
 				<button type="button" class="btn btn-danger mx-3">Cancelar pedido</button>
 			</a>
-			<button type="button" class="btn btn-success">Confirmar pedido</button>
+			<a th:href="@{/pedidos/salvar}">
+				<button type="button" class="btn btn-success">Confirmar pedido</button>
+			</a>
 		</div>
-		
 		<hr/>
-	</div>
-	
+</div>
 
+<div class="jumbotron mb-0">
+	<h1 class="text-center display-4">Histórico de pedidos</h1>
+	<hr>
+	
+	<div class="card mt-4 m-2"  style="max-width: 540px;" th:each="pedido: ${historico}">
+		<div class="row no-gutters">
+			
+			<div class="col-md-4 bg-dark text-center d-flex align-items-center justify-content-center text-white">
+				<h4 th:text="${pedido.data}"></h4>
+			</div>
+				
+			<div class="card-body">
+				<h1 th:text="${pedido.pratosDoPedido()}"></h1>
+			</div>
+		</div>
+	</div>
+</div>
+	
 </body>
 </html>
