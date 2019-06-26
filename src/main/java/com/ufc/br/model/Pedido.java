@@ -73,10 +73,10 @@ public class Pedido {
 	}
 	
 	public String pratosDoPedido() {
-		String nomes = "";
+		String nomes = "Itens do pedido: ";
 		for(ItemPedido item : itens) {
-			nomes = nomes.concat(item.getPrato().getNome());
+			nomes = nomes.concat(item.getPrato().getNome()).concat(", ");
 		}
-		return nomes;
+		return nomes.substring(0, nomes.length()-2);
 	}
 }

@@ -1,6 +1,5 @@
 package com.ufc.br.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,9 +13,6 @@ public class ItemPedido{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	private Pedido pedido;
 	
 	@ManyToOne
 	private Prato prato;
@@ -49,14 +45,6 @@ public class ItemPedido{
 
 	public void setPrato(Prato prato) {
 		this.prato = prato;
-	}
-
-	public Pedido getPedido() {
-		return pedido;
-	}
-
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
 	}
 
 	public int getQuantidade() {
