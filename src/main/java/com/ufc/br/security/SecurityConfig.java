@@ -17,17 +17,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
+		http.csrf().disable().authorizeRequests()
 		.antMatchers("/", "/usuario/cadastro", "/usuario/salvar", "/pratos/listagem").permitAll()
 		.antMatchers("/css/**", "/js/**", "/img/**", "/pratos_images/**").permitAll()
 		
-		.anyRequest().authenticated()//hasAnyRole
-		.and().formLogin()
-			//.loginPage("/login/formulario")
-			//.loginProcessingUrl("/login/entrar")
-			//.defaultSuccessUrl("/")
-		.permitAll()
-		.and().logout().logoutSuccessUrl("/").permitAll();
+		.anyRequest().authenticated()
+		.and().formLogin().loginPage("/login/formulario").permitAll()
+		.and().logout().logoutSuccessUrl("/login/formulario");
 	}
 
 	@Override

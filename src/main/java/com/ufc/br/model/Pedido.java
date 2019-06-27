@@ -1,6 +1,7 @@
 package com.ufc.br.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 public class Pedido {
 	
@@ -18,7 +21,8 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	private Date data;
+	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
+	private LocalDateTime data;
 	
 	private double valor;
 	
@@ -32,11 +36,11 @@ public class Pedido {
 		
 	}
 	
-	public Pedido(Usuario usuario, List<ItemPedido> itensPedido, float valorTotal, Date dataPedido) {
+	public Pedido(Usuario usuario, List<ItemPedido> itensPedido, float valorTotal, LocalDateTime dateTime) {
 		this.usuario = usuario;
 		this.itens = itensPedido;
 		this.valor = valorTotal;
-		this.data = dataPedido;
+		this.data = dateTime;
 	}
 
 	public Long getId() {
@@ -48,11 +52,11 @@ public class Pedido {
 	}
 	
 
-	public Date getData() {
-		return data;
+	public String getData() {
+		return DateTimeFormatter.ofPattern("dd/MM/yyyy 'às' hh:mm a").format(data);
 	}
 
-	public void setData(Date data) {
+	public void setData(LocalDateTime data) {
 		this.data = data;
 	}
 
@@ -77,6 +81,7 @@ public class Pedido {
 		for(ItemPedido item : itens) {
 			nomes = nomes.concat(item.getPrato().getNome()).concat(", ");
 		}
+		
 		return nomes.substring(0, nomes.length()-2);
 	}
 }

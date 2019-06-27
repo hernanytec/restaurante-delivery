@@ -46,7 +46,7 @@ public class PratosController {
 		prato.setCaminhoImagem(imagePath);
 		
 		pratoService.salvar(prato);
-		ModelAndView mv = new ModelAndView("redirect:/");
+		ModelAndView mv = new ModelAndView("redirect:/pratos/listagem");
 		return mv;
 	}
 

@@ -1,8 +1,8 @@
 package com.ufc.br.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,8 @@ public class PedidosController {
 	public float getValorTotal() {
 		float total = 0;
 		for(ItemPedido item: itensPedido) {
-			total += item.getQuantidade() * item.getPrato().getPreco();
+			if(item != null)
+				total += item.getQuantidade() * item.getPrato().getPreco();
 		}
 		return total;
 	}
@@ -74,7 +75,7 @@ public class PedidosController {
 	
 	@RequestMapping("/salvar")
 	public ModelAndView salvar() throws IOException{
-		pedidoService.salvar(new Pedido(usuarioLogado, itensPedido, getValorTotal(), new Date()));
+		pedidoService.salvar(new Pedido(usuarioLogado, itensPedido, getValorTotal(), LocalDateTime.now()));;
 		
 		itensPedido.clear();
 

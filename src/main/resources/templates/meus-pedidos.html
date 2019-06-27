@@ -12,7 +12,7 @@
 
 	<!--Menu-->
 	<nav class="navbar fixed-top navbar-expand-lg"
-		style="background: linear-gradient(rgba(0, 0, 0, 1), transparent)">
+		style="background: rgba(0, 0, 0, 1)">
 		<a class="navbar-brand text-white" href="/">
 			Delivery
 		</a>
@@ -39,8 +39,6 @@
 				<li sec:authorize="hasAnyRole('ADMIN')"  class="nav-item px-2 "><a class="nav-link text-white"
 					href="/pratos/cadastro"> Cadastro de pratos </a></li>
 
-				<li sec:authorize="hasAnyRole('ADMIN')" class="nav-item px-2 "><a class="nav-link text-white"
-					href="/pratos/cadastro"> Cadastro de gerente </a></li>
 
 				<li sec:authorize="isAnonymous()" class="nav-item px-2"><a class="nav-link text-white"
 					href="/login"> Entrar </a></li>
@@ -56,11 +54,15 @@
 
 <div class="jumbotron bg-white mt-5">
 		<h1 class="display-4 text-center">Aguardando Confirmação</h1>
-		
-		<hr>
+		<hr/>
 	
 		<div class="col d-flex justify-content-left">
 			<div class="row">
+			
+				<div th:if="${ #lists.isEmpty(itensPedido)}">
+					Você ainda não escolheu nenhum prato
+				</div>
+			
 				<div class="card shadow-sm mb-5 m-2" style="width: 15rem" th:each="itemPedido: ${itensPedido}">
 					<div class="card-header py-1">
 						<a th:href="@{/pedidos/remover-do-pedido/{id}(id = ${itemPedido.prato.id})}">
@@ -72,10 +74,8 @@
 						</a>
 					</div>
 	
-	
 					<img class="card-img-top" height="150" th:src="${itemPedido.prato.caminhoImagem}">
-					
-					
+									
 					<div class="card-body">
 						<h5 class="card-title" th:text="${itemPedido.prato.nome}"></h5>
 						<p class="card-text" th:text="'Preço: R$ ' + ${itemPedido.prato.preco}">
@@ -91,10 +91,10 @@
 		<div class="row float-right bg-white" th:object="${valorTotal}">
 			<p class="my-auto bg-light p-2" th:text="'Valor total: R$ ' + ${valorTotal}"/>
 			<a th:href="@{/pedidos/cancelar}">
-				<button type="button" class="btn btn-danger mx-3">Cancelar pedido</button>
+				<button th:disabled="${ #lists.isEmpty(itensPedido)}"  type="button" class="btn btn-danger mx-3">Cancelar pedido</button>
 			</a>
 			<a th:href="@{/pedidos/salvar}">
-				<button type="button" class="btn btn-success">Confirmar pedido</button>
+				<button th:disabled="${ #lists.isEmpty(itensPedido)}" type="button" class="btn btn-success">Confirmar pedido</button>
 			</a>
 		</div>
 		<hr/>

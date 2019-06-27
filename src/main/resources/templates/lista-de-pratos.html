@@ -36,7 +36,7 @@
 
 	<!--Menu-->
 	<nav class="navbar fixed-top navbar-expand-lg"
-		style="background: linear-gradient(rgba(0, 0, 0, 1), transparent)">
+		style="background: rgba(0, 0, 0, 1)">
 		<a class="navbar-brand text-white" href="/">
 			Delivery
 		</a>
@@ -62,12 +62,9 @@
 
 				<li sec:authorize="hasAnyRole('ADMIN')"  class="nav-item px-2 "><a class="nav-link text-white"
 					href="/pratos/cadastro"> Cadastro de pratos </a></li>
-
-				<li sec:authorize="hasAnyRole('ADMIN')" class="nav-item px-2 "><a class="nav-link text-white"
-					href="/pratos/cadastro"> Cadastro de gerente </a></li>
-					
+	
 				<li sec:authorize="isAnonymous()" class="nav-item px-2"><a class="nav-link text-white"
-					href="/login"> Entrar </a></li>
+					href="/login/formulario"> Entrar </a></li>
 
 				<li sec:authorize="isAuthenticated()" class="nav-item px-2"><a class="nav-link text-white"
 					href="/logout"> Sair </a></li>
@@ -131,7 +128,6 @@
 								<span class="mr-auto" th:id="'total' + ${prato.id}"></span>
 								
 								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-								<!--  th:href="@{/pedidos/adicionar/{prato}/{quantidade}(prato = ${prato.id}, quantidade = ${qtd})}">-->
 								<a th:href="|javascript:fazPedido('${prato.id}')|">
 									<button type="submit" class="btn btn-success">Confirmar</button>
 								</a>

@@ -80,11 +80,8 @@ body {
 				<li sec:authorize="hasAnyRole('ADMIN')"  class="nav-item px-2 "><a class="nav-link text-white"
 					href="/pratos/cadastro"> Cadastro de pratos </a></li>
 
-				<li sec:authorize="hasAnyRole('ADMIN')" class="nav-item px-2 "><a class="nav-link text-white"
-					href="/pratos/cadastro"> Cadastro de gerente </a></li>
-					
-								<li sec:authorize="isAnonymous()" class="nav-item px-2"><a class="nav-link text-white"
-					href="/login"> Entrar </a></li>
+				<li sec:authorize="isAnonymous()" class="nav-item px-2"><a class="nav-link text-white"
+					href="/login/formulario"> Entrar </a></li>
 
 				<li sec:authorize="isAuthenticated()" class="nav-item px-2"><a class="nav-link text-white"
 					href="/logout"> Sair </a></li>

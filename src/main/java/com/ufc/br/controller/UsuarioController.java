@@ -26,7 +26,6 @@ public class UsuarioController {
 	
 	@PostMapping("/salvar")
 	public ModelAndView salvarUsuario(Usuario usuario) {
-		System.out.println(usuario);
 		usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
 		
 		usuarioService.salvar(usuario);

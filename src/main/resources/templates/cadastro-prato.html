@@ -1,8 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <title>Cadastro de pratos</title>
+
+<style>
+html, body {
+	margin: 0;
+	height: 100%;
+}
+
+body {
+	background-image: url("/img/bg_prato_cad.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+/*Animações na navbar*/
+.navbar {
+	transition-duration: .5s;
+}
+
+.navbar a {
+	transition-duration: .5s;
+}
+
+.navbar a:hover {
+	border-radius: 3px;
+	background-color: rgba(255, 255, 255, .2);
+	color: black;
+}
+</style>
+
+
 </head>
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -13,27 +44,76 @@
   integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
 <body>
-	<div class="jumbotron bg-dark rounded-0 text-white">
-		<form id="form-features" method="POST" th:action="@{/pratos/salvar}" enctype="multipart/form-data" th:object="${prato}">
+	<!--Menu-->
+	<nav class="navbar fixed-top navbar-expand-lg"
+		style="background: rgba(0, 0, 0, 1)">
+		<a class="navbar-brand text-white" href="/">
+			Delivery
+		</a>
+
+		<button class="navbar-toggler ml-auto" type="button"
+			data-toggle="collapse" data-target="#conteudoNavbarSuportado"
+			aria-controls="conteudoNavbarSuportado" aria-expanded="false"
+			aria-label="Alterna navegação">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse " id="conteudoNavbarSuportado">
+			<ul class="navbar-nav ml-auto ">
+				<li sec:authorize="isAnonymous()" class="nav-item px-2 active"><a class="nav-link  text-white"
+					href="/usuario/cadastro"> Cadastro de usuario </a></li>
+
+
+				<li class="nav-item px-2 "><a class="nav-link text-white"
+					href="/pratos/listagem"> Lista de pratos </a></li>
+
+				<li sec:authorize="hasAnyRole('USER')"  class="nav-item px-2 "><a class="nav-link text-white"
+					href="/pedidos/atual"> Meus pedidos </a></li>
+
+				<li sec:authorize="hasAnyRole('ADMIN')"  class="nav-item px-2"><a class="nav-link text-white"
+					href="/pratos/cadastro"> Cadastro de pratos </a></li>
+
+				<li sec:authorize="isAnonymous()" class="nav-item px-2"><a class="nav-link text-white"
+					href="/login/formulario"> Entrar </a></li>
+
+				<li sec:authorize="isAuthenticated()" class="nav-item px-2"><a class="nav-link text-white"
+					href="/logout"> Sair </a></li>
+
+			</ul>
+		</div>
+	</nav>
+
+
+
+
+	<div class="jumbotron bg-transparent text-white" style="padding-top: 15%">			
+		<form id="form-features" class="rounded float-right w-50 p-3"
+		 method="POST" th:action="@{/pratos/salvar}"
+		 enctype="multipart/form-data" th:object="${prato}"
+		 style="background: rgba(0, 0, 0, .6)">
+		 
+			<h4 class="text-center mb-2 font-weight-bold">Preencha as informações do prato</h4>
+			<hr class="bg-white mb-5"/>
+		
 			<div class="form-row form-group">
-				<div class="col-sm-4">
+				<div class="col-sm-10 mx-auto">
 					<label for="input-nome">Nome</label>
-					<input type="text" id="input-nome" required th:field="*{nome}" class="form-control" placeholder="Nome do prato">
+					<input autofocus type="text" id="input-nome" required th:field="*{nome}" class="form-control" placeholder="Nome do prato">
 				</div>
 			</div>
 			
 			<div class="form-row form-group">
-				<div class="col-sm-1">
+				<div class="col-sm-4 ml-auto">
 					<label for="input-preco">Preço (R$)</label>
 					<input type="number"  step="any" id="input-preco" required th:field="*{preco}" class="form-control" placeholder="Preço">
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-6 mr-auto">
 					<label for="file-upload">Imagem</label>
 				   	<input type="file" style="cursor: pointer" required name="imageFile" class="form-control btn btn-light" id="file-upload">
 				 </div>
 			</div>
 			<div class="form-row form-group">
-				<div class="col-sm-4">
+				<div class="col-sm-10 mx-auto">
 				   <input type="submit" class="btn btn-success w-100 mt-3" id="btn-submit" value="Salvar"/>
 			 	</div>
 			</div>
